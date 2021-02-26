@@ -4,6 +4,6 @@ const checkPrice = require('../controllers/checkPrice')
 
 const router = new express.Router()
 
-router.get('/checkPrice',checkPrice)
+router.post('/checkPrice',checkPrice)
 
 module.exports =  router
