@@ -2,13 +2,31 @@ const nightmare = require('nightmare')()
 
 const checkPrice=  async (req,res)=> {
     try {
-      const priceString = await nightmare.goto("https://www.amazon.in/RASCO-Hand-Stitched-Football-Size/dp/B07X1D2C8N/ref=sr_1_1_sspa?dchild=1&qid=1614361585&refinements=p_n_pct-off-with-tax%3A2665401031&s=sports&sr=1-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFJRU9MUE5YTEtFQ00mZW5jcnlwdGVkSWQ9QTA5OTY3NTYzNVpCUUlPN0pZMkFDJmVuY3J5cHRlZEFkSWQ9QTA0MjMwMjBWWE5LSjZMSU5MVEkmd2lkZ2V0TmFtZT1zcF9hdGZfYnJvd3NlJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==")
+        const data =(req.body);
+        console.log(data);
+        var name= data.Name
+        var email=data.Email
+        var url =data.Url
+        var expected_price=data.Price
+
+      const priceString = await nightmare.goto(url)
                                          .wait("#priceblock_ourprice")
                                          .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
                                          .end()
-      console.log(priceString)  
-      const priceNumber = parseFloat(priceString.replace('₹', ''))
+      console.log(priceString)
+    //   const priceNumber = parseFloat(priceString.replace('₹', ''))
+      var price1
+      for (let index = 0; index < priceString.length; index++) {
+          if(index>1){
+                price1=price1+priceString[index]
+          }
+          
+      }
+      const priceNumber = parseFloat(price1)
+    //   console.log(price1)
       console.log(priceNumber)
+      console.log(name)
+      console.log(email)
 
 
     } catch (e) {
