@@ -20,7 +20,7 @@ app.get('/',(req,res)=>{
     res.send('Working...')
 })
 
-app.use('/checkPrice',checkPrice)
+app.use('/product',checkPrice)
 
 app.use((err,req,res,next) => {
     res.status(500).json({message: err.message})
