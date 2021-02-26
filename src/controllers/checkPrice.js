@@ -1,38 +1,48 @@
 const nightmare = require('nightmare')()
+const fs = require('fs')
 
-const checkPrice=  async (req,res)=> {
-    try {
-        const data =(req.body);
-        console.log(data);
-        var name= data.Name
-        var email=data.Email
-        var url =data.Url
-        var expected_price=data.Price
+const checkPrice = async (req, res) => {
+  try {
+    const data = (req.body);
+    console.log(data);
+    var name = data.name
+    var email = data.email
+    var url = data.url
+    var expectedPrice = data.price
 
-      const priceString = await nightmare.goto(url)
-                                         .wait("#priceblock_ourprice")
-                                         .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
-                                         .end()
-      console.log(priceString)
-    //   const priceNumber = parseFloat(priceString.replace('₹', ''))
-      var price1
-      for (let index = 0; index < priceString.length; index++) {
-          if(index>1){
-                price1=price1+priceString[index]
-          }
-          
-      }
-      const priceNumber = parseFloat(price1)
-    //   console.log(price1)
-      console.log(priceNumber)
-      console.log(name)
-      console.log(email)
+    // const priceString = await nightmare.goto(url)
+    //   .wait("#priceblock_ourprice")
+    //   .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
+    //   .end()
 
+    // var price1 = ''
+    // for (let index = 0; index < priceString.length; index++) {
+    //   if (index > 1 && priceString[index] != ',') {
+    //     price1 += priceString[index]
+    //   }
 
-    } catch (e) {
-      
-      throw e
+    // }
+
+    // const priceNumber = parseFloat(price1)
+    // console.log(priceNumber)
+
+    if (!fs.existsSync('./public')) {
+      fs.mkdirSync('./public');
+      console.log('directory created')
     }
-    res.send()
+
+    console.log(name)
+    console.log(email)
+    console.log(url)
+    console.log(expectedPrice)
+
+    fs.writeFileSync("./public/" + Date.now() + ".txt", name + "," + email + "," + url + "," + expectedPrice);
+
+
+  } catch (e) {
+
+    throw e
   }
-  module.exports= checkPrice;
+  res.send()
+}
+module.exports = checkPrice;
