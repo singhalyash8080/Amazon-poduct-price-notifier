@@ -1,4 +1,3 @@
-const nightmare = require('nightmare')()
 const fs = require('fs')
 
 const checkPrice = async (req, res) => {
@@ -9,22 +8,6 @@ const checkPrice = async (req, res) => {
     var email = data.email
     var url = data.url
     var expectedPrice = data.price
-
-    // const priceString = await nightmare.goto(url)
-    //   .wait("#priceblock_ourprice")
-    //   .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
-    //   .end()
-
-    // var price1 = ''
-    // for (let index = 0; index < priceString.length; index++) {
-    //   if (index > 1 && priceString[index] != ',') {
-    //     price1 += priceString[index]
-    //   }
-
-    // }
-
-    // const priceNumber = parseFloat(price1)
-    // console.log(priceNumber)
 
     if (!fs.existsSync('./public')) {
       fs.mkdirSync('./public');
