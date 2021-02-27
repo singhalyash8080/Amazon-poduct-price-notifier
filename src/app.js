@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const cors = require('cors')
-const checkPrice = require('./routes/checkPrice')
+const checkPrice = require('./routes/saveProductDetails')
 
 // setting path for env variables
 require('dotenv').config({path:path.resolve(__dirname, '../.env') })
