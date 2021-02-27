@@ -7,7 +7,7 @@ const axios = require('axios');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
-require('dotenv').config({path:path.resolve(__dirname, '../.env') })
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
 
 var transporter = nodemailer.createTransport(smtpTransport({
@@ -78,6 +78,10 @@ function readFiles(dirname) {
 
 const checkPrice = async () => {
 
+    if (!fs.existsSync('./public')) {
+        fs.mkdirSync('./public');
+        console.log('directory created')
+    }
 
     readFiles('./public/')
         .then(files => {
@@ -114,7 +118,7 @@ const checkPrice = async () => {
                         from: 'singhal.yash8080@gmail.com',
                         to: email,
                         subject: 'Notification regarding product sale on Amazon',
-                        text: 'Hey'+name+'! The product you were looking for is now under your desired price. Happy shopping.'
+                        text: 'Hey' + name + '! The product you were looking for is now under your desired price. Happy shopping.'
                     };
 
                     transporter.sendMail(mailOptions, function (error, info) {
